@@ -55,7 +55,7 @@ namespace WindowsFormsApp11
             // Проверка ввода символа
             char ch = e.KeyChar;
            
-            if (!Char.IsDigit(ch) && !(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch == 44))
+            if (!Char.IsDigit(ch) && !(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch == 44) && !(ch == 127) && !(ch == 08))
             {
                 e.Handled = true;
             }
