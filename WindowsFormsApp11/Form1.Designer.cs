@@ -53,6 +53,10 @@
             this.buttonDel = new System.Windows.Forms.Button();
             this.buttonDot = new System.Windows.Forms.Button();
             this.buttonResult = new System.Windows.Forms.Button();
+            this.logTable = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.saveLog = new System.Windows.Forms.Button();
+            this.logLoad = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mainField
@@ -307,7 +311,7 @@
             this.buttonDot.Name = "buttonDot";
             this.buttonDot.Size = new System.Drawing.Size(54, 41);
             this.buttonDot.TabIndex = 23;
-            this.buttonDot.Text = ".";
+            this.buttonDot.Text = ",";
             this.buttonDot.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonDot.UseVisualStyleBackColor = true;
             this.buttonDot.Click += new System.EventHandler(this.ButtonDot_Click);
@@ -323,11 +327,55 @@
             this.buttonResult.UseVisualStyleBackColor = true;
             this.buttonResult.Click += new System.EventHandler(this.ButtonResult_Click);
             // 
+            // logTable
+            // 
+            this.logTable.Location = new System.Drawing.Point(371, 59);
+            this.logTable.Multiline = true;
+            this.logTable.Name = "logTable";
+            this.logTable.ReadOnly = true;
+            this.logTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.logTable.Size = new System.Drawing.Size(417, 311);
+            this.logTable.TabIndex = 25;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(485, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(200, 24);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "История вычислений";
+            // 
+            // saveLog
+            // 
+            this.saveLog.Location = new System.Drawing.Point(433, 376);
+            this.saveLog.Name = "saveLog";
+            this.saveLog.Size = new System.Drawing.Size(125, 48);
+            this.saveLog.TabIndex = 27;
+            this.saveLog.Text = "Сохранить данные";
+            this.saveLog.UseVisualStyleBackColor = true;
+            this.saveLog.Click += new System.EventHandler(this.SaveLog_Click);
+            // 
+            // logLoad
+            // 
+            this.logLoad.Location = new System.Drawing.Point(603, 378);
+            this.logLoad.Name = "logLoad";
+            this.logLoad.Size = new System.Drawing.Size(125, 48);
+            this.logLoad.TabIndex = 28;
+            this.logLoad.Text = "Загрузить данные";
+            this.logLoad.UseVisualStyleBackColor = true;
+            this.logLoad.Click += new System.EventHandler(this.LogLoad_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 437);
+            this.Controls.Add(this.logLoad);
+            this.Controls.Add(this.saveLog);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.logTable);
             this.Controls.Add(this.buttonResult);
             this.Controls.Add(this.buttonDot);
             this.Controls.Add(this.buttonDel);
@@ -387,6 +435,10 @@
         private System.Windows.Forms.Button buttonDel;
         private System.Windows.Forms.Button buttonDot;
         private System.Windows.Forms.Button buttonResult;
+        private System.Windows.Forms.TextBox logTable;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button saveLog;
+        private System.Windows.Forms.Button logLoad;
     }
 }
 

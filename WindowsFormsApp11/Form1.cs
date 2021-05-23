@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp11
 {
-    public enum Number
+    public enum Number // Набор чисел в 16-чной системе счиления
     {
         A = 10,
         B,
@@ -54,7 +55,7 @@ namespace WindowsFormsApp11
             // Проверка ввода символа
             char ch = e.KeyChar;
            
-            if (!Char.IsDigit(ch) && !(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch == 46))
+            if (!Char.IsDigit(ch) && !(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch == 44))
             {
                 e.Handled = true;
             }
@@ -84,9 +85,13 @@ namespace WindowsFormsApp11
                             mainField.Text += 'F';
                             break;
                     }
+                    e.Handled = true;
                 }
-                else if ((ch == 46)) DotCheck();
-                e.Handled = true;
+                else if ((ch == 44))
+                {
+                    DotCheck();
+                    e.Handled = true;
+                }
                 mainField.SelectionStart = mainField.Text.Length;
             }
         }
@@ -185,23 +190,82 @@ namespace WindowsFormsApp11
         private void DotCheck()
         {
             string str = mainField.Text;
-            if (!(str.Contains('.'))) mainField.Text += '.'; ;
+            if (!(str.Contains(','))) mainField.Text += ','; ;
         }
 
         private void ButtonResult_Click(object sender, EventArgs e)
         {
-            string number = mainField.Text;
+            try
+            {
+                resultField.Clear();
+                if (CheckNumber(mainField.Text) == true)
+                {
+                    string result = Operation.ConvertToResult(mainField.Text, (int)systemSelector1.SelectedItem, (int)systemSelector2.SelectedItem);
+                    resultField.Text = result;
+                    MakeLog();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при вычислении числа, повторите ввод.");
+            }
+        }
+
+        private void MakeLog() // Создание записи
+        {
+            string log = mainField.Text + "(" + systemSelector1.SelectedItem + ") -> " + resultField.Text + "(" + systemSelector2.SelectedItem + ") \r\n";
+            logTable.Text += log;
+        }
+
+        private bool CheckNumber(string number) // Проверка числа
+        {
             if (systemSelector1.SelectedIndex == systemSelector2.SelectedIndex) // Проверка на одинаковые системы счисления
             {
                 MessageBox.Show("Выберите систему счисления, отличную от начальной.");
+                return false;
             }
             else if (Operation.SystemNumberCheck(number, (int)systemSelector1.SelectedItem) == false) // Проверка на значения выше системы счисления
             {
                 MessageBox.Show("Ошибка, проверьте правильность ввода и выбранной системы.");
+                return false;
             }
             else
             {
-               int value = Operation.ConvertToNumber(number);
+                return true;
+            }
+        }
+
+        private void SaveLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter("test.txt", true))
+                {
+                    sw.WriteLine(logTable.Text);
+                    sw.Close();
+                    MessageBox.Show("Данные сохранены успешно!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при записи файла");
+            }
+        }
+
+        private void LogLoad_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader("test.txt", true))
+                {
+                    logTable.Clear();
+                    logTable.Text = sr.ReadToEnd();
+                    sr.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при чтении файла");
             }
         }
     }
